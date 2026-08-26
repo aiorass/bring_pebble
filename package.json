@@ -1,0 +1,50 @@
+{
+  "name": "bring_pebble",
+  "author": "MakeAwesomeHappen",
+  "version": "1.0.0",
+  "keywords": ["pebble-app"],
+  "private": true,
+  "dependencies": {},
+  "pebble": {
+    "displayName": "Bring!",
+    "uuid": "15234f21-7a9c-45cb-946d-5d2c1cad64b2",
+    "sdkVersion": "3",
+    "enableMultiJS": true,
+    "targetPlatforms": [
+      "aplite",
+      "basalt",
+      "chalk",
+      "diorite",
+      "emery",
+      "flint",
+      "gabbro"
+    ],
+    "watchapp": {
+      "watchface": false
+    },
+    "capabilities": [
+      "configurable"
+    ],
+    "messageKeys": [
+      "action",
+      "itemIndex",
+      "itemName",
+      "itemDone",
+      "itemIcon",
+      "errorMsg"
+    ],
+    "resources": {
+      "media": [
+        { "type": "bitmap", "name": "ICON_APP", "file": "images/icon_app.png", "menuIcon": true },
+        { "type": "bitmap", "name": "ICON_DEFAULT", "file": "images/icon_default.png" },
+        { "type": "bitmap", "name": "ICON_BREAD", "file": "images/icon_bread.png" },
+        { "type": "bitmap", "name": "ICON_DAIRY", "file": "images/icon_dairy.png" },
+        { "type": "bitmap", "name": "ICON_FRUIT", "file": "images/icon_fruit.png" },
+        { "type": "bitmap", "name": "ICON_VEGETABLE", "file": "images/icon_vegetable.png" },
+        { "type": "bitmap", "name": "ICON_MEAT", "file": "images/icon_meat.png" },
+        { "type": "bitmap", "name": "ICON_DRINK", "file": "images/icon_drink.png" },
+        { "type": "bitmap", "name": "ICON_CLEANING", "file": "images/icon_cleaning.png" }
+      ]
+    }
+  }
+}
