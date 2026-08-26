@@ -48,12 +48,10 @@ pebble install --phone <ip>           # instalar en un reloj real emparejado
 
 ## Limitaciones conocidas
 
-- **Nombres de items del catálogo**: si agregás un item eligiéndolo del
-  catálogo con iconos de Bring! (en vez de escribirlo), puede mostrarse con
-  su clave interna en vez del nombre traducido — la traducción requiere
-  descargar los diccionarios de locale de Bring!, que se dejó fuera para
-  mantener la app simple. Los items escritos a mano (a mano o por voz desde
-  el reloj) siempre se ven bien.
+- **Pantallas redondas (chalk / gabbro)**: el título de sección "Lista de
+  compras" queda recortado contra el borde curvo de la pantalla (se corta
+  la "L" inicial). Es un detalle de layout del `MenuLayer` pendiente de
+  ajustar; el resto de la app funciona igual.
 - **Sin edición de texto en el reloj**: agregar items usa dictado por voz
   (`dictation_session`). En hardware sin micrófono (aplite/basalt/chalk/
   diorite) esa opción no va a funcionar; el reloj sigue mostrando y
@@ -61,6 +59,13 @@ pebble install --phone <ip>           # instalar en un reloj real emparejado
 - **Reintentos de sincronización**: si el teléfono tarda en reconectar
   Bluetooth, el reloj reintenta el pedido de sync cada 4s hasta 6 veces antes
   de mostrar un error.
+- **Traducción de items de catálogo**: los items elegidos del catálogo de
+  Bring! (no los escritos a mano) se guardan en el backend bajo un nombre
+  canónico en alemán y se traducen automáticamente al idioma de la cuenta
+  usando el diccionario público de locale de Bring!. Cubre los idiomas más
+  comunes (`es-ES`, `en-US`, `fr-FR`, etc. — ver `BRING_SUPPORTED_LOCALES`
+  en `bring-api.js`); una variante regional muy específica no listada ahí
+  podría no traducirse.
 
 ## Probado
 
@@ -68,7 +73,7 @@ pebble install --phone <ip>           # instalar en un reloj real emparejado
 - El round-trip de `AppMessage` (reloj ⇄ pkjs) se probó en el emulador
   `emery`: el reloj pide sync, el teléfono responde y el reloj muestra el
   estado "no configurado" correctamente.
-- El flujo completo de login/lista de Bring! **no se probó contra la API
-  real** (requiere una cuenta de Bring! real) — los endpoints y formatos de
-  request/response se tomaron literalmente del código fuente de
-  `miaucl/bring-api`, no de documentación de terceros.
+- El flujo completo de login/lista de Bring! se probó contra la API real
+  con una cuenta real: login, sincronización automática al abrir la app,
+  agregar/marcar/desmarcar items (a mano y por voz) y traducción de items
+  de catálogo, todo confirmado funcionando de punta a punta.
