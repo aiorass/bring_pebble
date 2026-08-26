@@ -227,6 +227,11 @@ static void menu_select_callback(MenuLayer *menu_layer, MenuIndex *cell_index, v
 
   BringItem *item = &s_items[cell_index->row];
   item->done = !item->done;
+  if (item->done) {
+    vibes_double_pulse();
+  } else {
+    vibes_short_pulse();
+  }
   send_toggle_item(cell_index->row, item->name, item->done);
   menu_layer_reload_data(s_menu_layer);
 }
@@ -324,6 +329,11 @@ static void window_load(Window *window) {
   });
   menu_layer_set_click_config_onto_window(s_menu_layer, window);
   layer_add_child(window_layer, menu_layer_get_layer(s_menu_layer));
+
+  // On touchscreen hardware (Pebble Time 2 / Pebble Round 2), tapping a row
+  // now fires the same select_click as pressing the SELECT button — no-op
+  // on button-only platforms.
+  app_touch_navigation_enable(true);
 
   s_message_layer = text_layer_create(bounds);
   text_layer_set_text_alignment(s_message_layer, GTextAlignmentCenter);
