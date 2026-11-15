@@ -11,6 +11,11 @@ var ACTION_ERROR = 5;
 var ACTION_NOT_CONFIGURED = 6;
 var ACTION_SYNC_START = 7;
 
+// Trailing sentence punctuation (ASCII, ellipsis, CJK, Spanish inverted marks)
+// and whitespace. Characters inside the text, and endings such as "%" or ")",
+// are kept.
+var TRAILING_PUNCTUATION = /[\s.,;:!?\u2026\u3001\u3002\uFF01\uFF0C\uFF1A\uFF1B\uFF1F\u00A1\u00BF]+$/;
+
 var MAX_ITEMS = 80; // must match MAX_ITEMS in src/c/bring_pebble.c
 
 function isConfigured() {
@@ -126,7 +131,8 @@ Pebble.addEventListener('appmessage', function (e) {
       sendNotConfigured();
       return;
     }
-    var name = (payload.itemName || '').trim();
+    // Voice dictation often appends sentence punctuation ("Milk."); drop it.
+    var name = (payload.itemName || '').trim().replace(TRAILING_PUNCTUATION, '');
     if (!name) {
       doSync();
       return;
